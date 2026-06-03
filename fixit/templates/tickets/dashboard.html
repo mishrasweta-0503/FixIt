@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Welcome to the Dashboard, {{ request.user.username }}!</h2>
+    <p>Your role-based ticket management system is officially live.</p>
+    {% if request.user.is_staff or request.user.profile.is_staff_member %}
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <strong>Open Tickets</strong> : {{open_tickets}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <strong>Closed Tickets</strong> : {{closed_tickets}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <strong>Pending Tickets</strong> : {{pending_tickets}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <strong>Resolved Tickets</strong> : {{resolved_tickets}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if tickets %}
+        {% for ticket in tickets %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h2>{{ ticket.title }}</h2>
+                    <p>{{ ticket.description }}</p>
+                    {% if ticket.status == 'Open' %}
+                        <span class="badge bg-warning text-dark">{{ ticket.status }}</span>
+                    {% elif ticket.status == 'Closed' %}
+                        <span class="badge bg-primary text-white">{{ ticket.status }}</span>
+                    {% elif ticket.status == 'Pending' %}
+                        <span class="badge bg-danger text-dark">{{ ticket.status }}</span>
+                    {% elif ticket.status == 'Resolved' %}
+                        <span class="badge bg-success text-dark">{{ ticket.status }}</span>
+                    {% else %}
+                        <span class="badge bg-warning text-dark">{{ ticket.status }}</span>
+                    {% endif %}
+                    {% if request.user.is_staff or request.user.profile.is_staff_member %}
+                        <a class="btn btn-primary" href="{% url 'ticket-update' ticket.id %}">Update Status</a>
+                    {% endif %}
+                    {% if not request.user.is_staff and ticket.created_by == request.user %}
+                        <a href="{% url 'ticket_edit' ticket.id %}" type="button" class="btn btn-info">Edit</a>
+                        <a href="{% url 'ticket_delete' ticket.id %}" type="button" class="btn btn-danger">Delete</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>You have no active maintenance requests</p>
+    {% endif %}
+</div>
+{% endblock %}

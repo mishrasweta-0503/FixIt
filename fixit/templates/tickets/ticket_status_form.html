@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Update Ticket Status</h2>
+    <p>Use the dropdown below to advance the ticket workflow.</p>
+    
+    <form method="POST" class="bg-white p-4 rounded shadow-sm">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success mt-3">Update Status</button>
+    </form>
+</div>
+{% endblock %}
