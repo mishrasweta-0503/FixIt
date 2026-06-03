@@ -1,0 +1,42 @@
+# ==========================================
+# 1. Databases & Security Secrets
+# ==========================================
+# Never upload your local database or local environment keys to GitHub
+*.sqlite3
+.env
+
+# ==========================================
+# 2. Python Environment & Dependencies
+# ==========================================
+# Your virtual environment folder contains thousands of downloaded packages.
+# Render installs these fresh using requirements.txt, so hide this folder!
+.venv/
+venv/
+env/
+ENV/
+
+# ==========================================
+# 3. Python Compiled Caches
+# ==========================================
+# These are internal files Python makes to run faster on your machine.
+# They change constantly and mess up clean code tracking.
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# ==========================================
+# 4. Django Static Gathering
+# ==========================================
+# This is the destination folder where WhiteNoise will bundle your assets.
+# It's generated automatically on Render, so it doesn't belong on GitHub.
+staticfiles/
+
+# ==========================================
+# 5. Mac Operating System Clutter
+# ==========================================
+# System files created automatically by macOS Finder settings
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
